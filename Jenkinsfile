@@ -8,31 +8,17 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'docker-compose run test'
-      }
-    }
-    stage('report') {
-      parallel {
-        stage('report') {
-          steps {
-            junit 'target/surefire-reports/*.xml'
-          }
-        }
-        stage('coverage') {
-          steps {
-            cobertura(coberturaReportFile: 'target/site/cobertura/coverage.xml')
-          }
-        }
+        sh './mvnw test'
       }
     }
     stage('package') {
       steps {
-        sh 'docker-compose run package'
+        sh './mvnw package'
       }
     }
     stage('archive') {
       steps {
-        archiveArtifacts 'target/spring-boot-sample-data-rest-0.1.0.jar'
+        archiveArtifacts 'target/spring-petclinic-*.jar'
       }
     }
   }
