@@ -8,9 +8,12 @@ pipeline {
         }
         stage('test') {
             steps {
-                recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), findBugs()]
                 sh './mvnw test'
             }
+        }
+        stage('analyze') {
+            recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), findBugs()]
+            jacoco()
         }
         stage('package') {
             steps {
