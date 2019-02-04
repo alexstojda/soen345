@@ -8,7 +8,7 @@ pipeline {
         }
         stage('test') {
             steps {
-                recordIssues
+                recordIssues enabledForFailure: true, aggregatingResults: true, tool: java()
                 sh './mvnw test'
             }
         }
