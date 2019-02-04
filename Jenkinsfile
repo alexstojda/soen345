@@ -12,8 +12,10 @@ pipeline {
             }
         }
         stage('analyze') {
-            recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), findBugs()]
-            jacoco()
+            steps {
+                recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), findBugs()]
+                jacoco()
+            }
         }
         stage('package') {
             steps {
