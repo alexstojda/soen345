@@ -36,12 +36,6 @@ public class OwnerTest {
 
     @Test
     public void getPetTest() {
-
-        for (Pet pet : owner.getPetsInternal()) {
-            System.out.println(pet.getName());
-            System.out.println(pet.isNew());
-        }
-
         Assert.assertEquals(oldPet, owner.getPet("old" , false));
         Assert.assertEquals(oldPet, owner.getPet("old" , true));
         Assert.assertEquals(newPet, owner.getPet("new" , false));
