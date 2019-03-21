@@ -68,6 +68,16 @@ class OwnerController {
         }
     }
 
+    @GetMapping("/owners/getAll")
+    public String getAllOwners() {
+        Collection<Owner> allOwners = this.owners.getAllOwners();
+        for (Owner owner : allOwners) {
+            System.out.println("Owner: " + owner.getFirstName() + " " + owner.getLastName());
+        }
+        return "redirect:/";
+
+    }
+
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
