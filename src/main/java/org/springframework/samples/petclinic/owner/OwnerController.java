@@ -68,12 +68,13 @@ class OwnerController {
         }
     }
 
-    @GetMapping("/owners/getAll")
-    public String getAllOwners() {
+    @GetMapping("/owners/forklift")
+    public String forkliftOwners() {
         Collection<Owner> allOwners = this.owners.getAllOwners();
         for (Owner owner : allOwners) {
-            System.out.println("Owner: " + owner.getFirstName() + " " + owner.getLastName());
         }
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.addAllOwners(allOwners);
         return "redirect:/";
 
     }
