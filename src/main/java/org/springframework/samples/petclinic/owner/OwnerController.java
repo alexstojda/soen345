@@ -71,8 +71,6 @@ class OwnerController {
     @GetMapping("/owners/forklift")
     public String forkliftOwners() {
         Collection<Owner> allOwners = this.owners.getAllOwners();
-        for (Owner owner : allOwners) {
-        }
         SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
         sqLiteOwnerController.addAllOwners(allOwners);
         return "redirect:/";
