@@ -10,10 +10,11 @@ public class SQLiteOwnerController {
 
     public void addAllOwners(Collection<Owner> owners) {
         //truncates table
-        executeSql("DELETE FROM owner;");
+        executeSql("DELETE FROM owners;");
+        executeSql("DELETE FROM sqlite_sequence WHERE name = 'owners'");
         //add each owner to the table
         for (Owner owner : owners) {
-            executeSql("INSERT INTO owner (id, first_name, last_name, address, city, phone_number)" +
+            executeSql("INSERT INTO owners (id, first_name, last_name, address, city, phone_number)" +
                 "VALUES (NULL, '" + owner.getFirstName() + "', '" + owner.getLastName() + "', '" +
                 owner.getAddress() + "', '" + owner.getCity() + "', '" + owner.getTelephone() + "')");
         }

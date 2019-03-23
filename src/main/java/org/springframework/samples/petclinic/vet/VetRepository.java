@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +43,12 @@ public interface VetRepository extends Repository<Vet, Integer> {
     @Cacheable("vets")
     Collection<Vet> findAll() throws DataAccessException;
 
+    @Query("SELECT DISTINCT specialty FROM Specialty specialty")
+    @Transactional(readOnly = true)
+    Collection<Specialty> getAllSpecialties();
+
+    @Query("SELECT DISTINCT vet FROM Vet vet")
+    @Transactional(readOnly = true)
+    Collection<Vet> getAllVets();
 
 }
