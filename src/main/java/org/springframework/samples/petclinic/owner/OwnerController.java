@@ -68,6 +68,15 @@ class OwnerController {
         }
     }
 
+    @GetMapping("/owners/forklift")
+    public String forkliftOwners() {
+        Collection<Owner> allOwners = this.owners.getAllOwners();
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.addAllOwners(allOwners);
+        return "redirect:/";
+
+    }
+
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
