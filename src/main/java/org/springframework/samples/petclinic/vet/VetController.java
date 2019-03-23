@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.samples.petclinic.vet.SQLiteVetController;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,14 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
+
+        SQLiteVetController sqliteVet = new SQLiteVetController();
+
         return "vets/vetList";
     }
 
     @GetMapping("/vets/fork")
-    public String getAllVets(Map<String, Object> model) {
+    public String getAllVets(Map<String, Object> model) throws SQLException {
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
         SQLiteVetController sqliteVet = new SQLiteVetController();
@@ -64,7 +68,7 @@ class VetController {
 
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
-        sqliteVet.addAllVetSpecs(vets.getVetList(),allSpecial);
+        sqliteVet.addAllVetSpecs(vets.getVetList());
         return "redirect:/";
     }
 

@@ -11,6 +11,7 @@ public class SQLiteOwnerController {
     public void addAllOwners(Collection<Owner> owners) {
         //truncates table
         executeSql("DELETE FROM owners;");
+        executeSql("DELETE FROM sqlite_sequence WHERE name = 'owners'");
         //add each owner to the table
         for (Owner owner : owners) {
             executeSql("INSERT INTO owners (id, first_name, last_name, address, city, phone_number)" +
