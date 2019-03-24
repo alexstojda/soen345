@@ -7,124 +7,112 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.samples.petclinic.SQLiteConnection;
 
 public class SQLiteVetController {
 
+    SQLiteConnection conn = new SQLiteConnection();
+
     public void addAllVets(Collection<Vet> vets)  {
+
         //truncates table
-        executeSql("DELETE FROM vets");
-        executeSql("DELETE FROM sqlite_sequence WHERE name = 'vets'");
+        conn.executeSql("DELETE FROM vets");
+        conn.executeSql("DELETE FROM sqlite_sequence WHERE name = 'vets'");
         //add each owner to the table
         for (Vet vet : vets) {
-            executeSql("INSERT INTO vets (id, first_name, last_name)" +
+            conn.executeSql("INSERT INTO vets (id, first_name, last_name)" +
                 "VALUES (NULL, '" + vet.getFirstName() + "', '" + vet.getLastName() + "')");
+
+            System.out.println(vet.getFirstName() + "', '" + vet.getLastName());
         }
         try{
             ArrayList<String[]> things = getVets();
-            System.out.println("Done");
+            for (int i = 0; i < things.size(); i++) {
+                System.out.println("from SQLite: " + things.get(i)[1] +" "+ things.get(i)[2]);
+            }
+
         }catch (Exception e){
-            System.out.println("getVets still doens't work");
+            System.out.println("getVets still doesn't work");
         }
-
-
-
     }
 
     public void addAllSpecialties(Collection<Specialty> allSpecial ){
-        executeSql("DELETE FROM specialties");
-        executeSql("DELETE FROM sqlite_sequence WHERE name = 'specialties'");
+        conn.executeSql("DELETE FROM specialties");
+        conn.executeSql("DELETE FROM sqlite_sequence WHERE name = 'specialties'");
 
         for (Specialty special : allSpecial){
-            executeSql("Insert INTO specialties (id, name)" +
+            conn.executeSql("Insert INTO specialties (id, name)" +
                 "Values (Null, '" + special.getName() +"')");
         }
     }
 
     public void addAllVetSpecs(List<Vet> vets) {
         //truncates table
-        executeSql("DELETE FROM vet_specialties;");
+        conn.executeSql("DELETE FROM vet_specialties;");
         //add each owner to the table
         for (Vet vet : vets) {
             List<Specialty> specs = vet.getSpecialties();
             for( Specialty temp : specs) {
-                executeSql("INSERT INTO vet_specialties (vet_id, specialty_id)" +
+                conn.executeSql("INSERT INTO vet_specialties (vet_id, specialty_id)" +
                     "VALUES ('" + vet.getId() + "', '" + temp.getId() + "')");
             }
         }
     }
 
     public void addVet(Vet vet){
-        executeSql("INSERT INTO vets (id, first_name, last_name)" +
+        conn.executeSql("INSERT INTO vets (id, first_name, last_name)" +
             "VALUES (NULL, '" + vet.getFirstName() + "', '" + vet.getLastName() + "')");
 
         //TODO::add consistency checker here to see compare both db's
     }
 
     public void addSpec(Specialty spec){
-        executeSql("Insert INTO specialties (id, name)" +
+        conn.executeSql("Insert INTO specialties (id, name)" +
             "Values (Null, '" + spec.getName() +"')");
 
         //TODO::add consistency checker here to see compare both db's
     }
 
-    private void executeSql(String sql) {
-        Connection conn = null;
-//        ResultSet result = null;
-        String url = "jdbc:sqlite:petclinic.db";
-
-        try {
-            conn = DriverManager.getConnection(url);
-            Statement statement = conn.createStatement();
-           statement.execute(sql);
-//           result = statement.executeQuery(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
-
     private ArrayList<String[]> getVets() {
-        ArrayList<String[]> value= new ArrayList<String[]>();;
+
         String sql = "Select id, first_name, last_name FROM vets";
-        Connection conn = null;
-        ResultSet result = null;
-        String url = "jdbc:sqlite:petclinic.db";
-
-        try {
-            conn = DriverManager.getConnection(url);
-            Statement statement = conn.createStatement();
-            result = statement.executeQuery(sql);
-
-            while(result.next()){
-                value.add(new String[]{
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3)
-                });
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            } finally {
-                return value;
-            }
+        int numberOfFields = 3;
+        return conn.getResult(sql, numberOfFields);
 
 
 
-        }
+
+//        ArrayList<String[]> value= new ArrayList<String[]>();;
+//        String sql = "Select id, first_name, last_name FROM vets";
+//        Connection conn = null;
+//        ResultSet result = null;
+//        String url = "jdbc:sqlite:petclinic.db";
+//
+//        try {
+//            conn = DriverManager.getConnection(url);
+//            Statement statement = conn.createStatement();
+//            result = statement.executeQuery(sql);
+//
+//            while(result.next()){
+//                value.add(new String[]{
+//                    result.getString(1),
+//                    result.getString(2),
+//                    result.getString(3)
+//                });
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            try {
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                System.out.println(ex.getMessage());
+//            } finally {
+//                return value;
+//            }
+//        }
 
     }
 }

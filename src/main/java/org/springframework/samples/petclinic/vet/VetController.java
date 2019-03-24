@@ -55,7 +55,7 @@ class VetController {
         return "vets/vetList";
     }
 
-    @GetMapping("/vets/fork")
+    @GetMapping("/vets/forklift")
     public String getAllVets(Map<String, Object> model) throws SQLException {
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
