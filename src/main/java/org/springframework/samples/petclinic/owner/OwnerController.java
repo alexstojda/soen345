@@ -70,9 +70,18 @@ class OwnerController {
 
     @GetMapping("/owners/forklift")
     public String forkliftOwners() {
+        //get the data for all owners, their pets, and petTypes
         Collection<Owner> allOwners = this.owners.getAllOwners();
+        Collection<Pet> allPets = this.owners.getAllPets();
+        Collection<PetType> allTypes = this.owners.getAllTypes();
+
         SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+
+        //dump into SQLite the data for all owners, their pets, and petTypes
         sqLiteOwnerController.addAllOwners(allOwners);
+        sqLiteOwnerController.addAllPets(allPets);
+        sqLiteOwnerController.addAllTypes(allTypes);
+
         return "redirect:/";
 
     }

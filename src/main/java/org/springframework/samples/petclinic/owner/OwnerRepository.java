@@ -56,6 +56,15 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
     @Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets")
     @Transactional(readOnly = true)
     Collection<Owner> getAllOwners();
+
+    @Query("SELECT DISTINCT pet FROM Pet pet")
+    @Transactional(readOnly = true)
+    Collection<Pet> getAllPets();
+
+    @Query("SELECT DISTINCT type FROM PetType type")
+    @Transactional(readOnly = true)
+    Collection<PetType> getAllTypes();
+
     /**
      * Save an {@link Owner} to the data store, either inserting or updating it.
      * @param owner the {@link Owner} to save
