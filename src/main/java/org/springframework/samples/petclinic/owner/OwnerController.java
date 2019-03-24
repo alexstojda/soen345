@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,9 +73,25 @@ class OwnerController {
 
     @GetMapping("/owners/forklift")
     public String forkliftOwners() {
+        //get the data for all owners, their pets, and petTypes
         Collection<Owner> allOwners = this.owners.getAllOwners();
+        Collection<Pet> allPets = this.owners.getAllPets();
+        Collection<PetType> allTypes = this.owners.getAllTypes();
+
+        //get the data for all visits
+        List<Visit> allVisits = new ArrayList<Visit>();
+        for (Pet pet : allPets) {
+            allVisits.addAll(pet.getVisits());
+        }
+
         SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+
+        //dump into SQLite the data for all owners, their pets, visits and petTypes
         sqLiteOwnerController.addAllOwners(allOwners);
+        sqLiteOwnerController.addAllPets(allPets);
+        sqLiteOwnerController.addAllTypes(allTypes);
+        sqLiteOwnerController.addAllVisits(allVisits);
+
         return "redirect:/";
 
     }
