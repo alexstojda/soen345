@@ -28,7 +28,7 @@ public class SQLiteConnection {
     }
 
     public ArrayList<String[]>  getResult(String sql, int fields) {
-        ArrayList<String[]> value= new ArrayList<String[]>();;
+        ArrayList<String[]> value= new ArrayList<String[]>();
         Connection conn = null;
         ResultSet result = null;
         String url = "jdbc:sqlite:petclinic.db";
@@ -39,12 +39,12 @@ public class SQLiteConnection {
             result = statement.executeQuery(sql);
 
             while(result.next()){
-                value.add(new String[]{
 
-                    result.getString(1),
-                    result.getString(2),
-                    result.getString(3)
-                });
+                String[] rowData = new String[fields];
+                for(int i = 0; i< fields; i++){
+                    rowData[i] = result.getString(i+1);
+                }
+                value.add(rowData);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

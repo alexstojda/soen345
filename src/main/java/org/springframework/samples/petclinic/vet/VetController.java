@@ -80,5 +80,4 @@ class VetController {
         vets.getVetList().addAll(this.vets.findAll());
         return vets;
     }
-
 }

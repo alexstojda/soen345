@@ -78,41 +78,5 @@ public class SQLiteVetController {
         String sql = "Select id, first_name, last_name FROM vets";
         int numberOfFields = 3;
         return conn.getResult(sql, numberOfFields);
-
-
-
-
-//        ArrayList<String[]> value= new ArrayList<String[]>();;
-//        String sql = "Select id, first_name, last_name FROM vets";
-//        Connection conn = null;
-//        ResultSet result = null;
-//        String url = "jdbc:sqlite:petclinic.db";
-//
-//        try {
-//            conn = DriverManager.getConnection(url);
-//            Statement statement = conn.createStatement();
-//            result = statement.executeQuery(sql);
-//
-//            while(result.next()){
-//                value.add(new String[]{
-//                    result.getString(1),
-//                    result.getString(2),
-//                    result.getString(3)
-//                });
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            try {
-//                if (conn != null) {
-//                    conn.close();
-//                }
-//            } catch (SQLException ex) {
-//                System.out.println(ex.getMessage());
-//            } finally {
-//                return value;
-//            }
-//        }
-
     }
 }
