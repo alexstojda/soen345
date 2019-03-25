@@ -44,16 +44,17 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
-    private final PetRepository pets;
-    private final VisitRepository visits;
+//    private final PetRepository pets;
+//    private final VisitRepository visits;
     private final boolean useNewDB = false;
 
 
+//    public OwnerController(PetRepository pets, OwnerRepository owners, VisitRepository visits) {
 
-    public OwnerController(PetRepository pets, OwnerRepository owners, VisitRepository visits) {
-        this.pets = pets;
+    public OwnerController( OwnerRepository owners) {
+//        this.pets = pets;
         this.owners = owners;
-        this.visits = visits;
+//        this.visits = visits;
     }
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
@@ -108,14 +109,12 @@ class OwnerController {
     @GetMapping("/owners/check")
     public String ownerCheck(){
         Collection<Owner> allOwners = this.owners.getAllOwners();
+        Collection<Pet> allPets = this.owners.getAllPets();
+        Collection<Visit> allVisits = this.owners.getAllVisits();
 
         SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
         sqLiteOwnerController.checkOwnersConsistency(allOwners);
-
-        Collection<Pet> allPets = this.pets.getAllPets();
         sqLiteOwnerController.checkPetsConsistency(allPets);
-
-        Collection<Visit> allVisits = this.visits.getAllVisits();
         sqLiteOwnerController.checkVisitsConsistency(allVisits);
         return "redirect:/";
     }

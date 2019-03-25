@@ -1,8 +1,0 @@
-GET http://localhost:8080/owners/{ownerId}/pets/check
-
-###
-
-GET http://localhost:8080/owners/{ownerId}/pets/check
-
-###
-

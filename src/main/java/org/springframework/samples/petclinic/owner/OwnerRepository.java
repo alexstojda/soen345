@@ -20,6 +20,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -60,6 +61,10 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
     @Query("SELECT DISTINCT pet FROM Pet pet")
     @Transactional(readOnly = true)
     Collection<Pet> getAllPets();
+
+    @Query("SELECT DISTINCT visit FROM Visit visit")
+    @Transactional(readOnly = true)
+    Collection<Visit> getAllVisits();
 
     @Query("SELECT DISTINCT type FROM PetType type")
     @Transactional(readOnly = true)

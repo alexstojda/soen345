@@ -33,21 +33,23 @@ public class SQLiteOwnerController {
     }
 
     public void checkOwnerConsistency(Owner owner) {
-        ArrayList<String[]> results = getOwner(owner.getId());
-        if (results == null)
-            System.out.println("Owner with id: " + owner.getId() + " was not found in SQLite DB");
+        if(owner.getId() != null) {
+            ArrayList<String[]> results = getOwner(owner.getId());
+            if (results == null)
+                System.out.println("Owner with id: " + owner.getId() + " was not found in SQLite DB");
 
-        if (0 != results.get(0)[0].compareTo(owner.getId().toString()) ||
-            0 != results.get(0)[1].compareTo(owner.getFirstName()) ||
-            0 != results.get(0)[2].compareTo(owner.getLastName()) ||
-            0 != results.get(0)[3].compareTo(owner.getAddress()) ||
-            0 != results.get(0)[4].compareTo(owner.getCity()) ||
-            0 != results.get(0)[5].compareTo(owner.getTelephone())) {
-            System.out.println("Inconsistency found with owner id: " + results.get(0)[0] + " while adding to system");
-            conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
-                + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
-                "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
-                " WHERE id='" + owner.getId() + "'");
+            if (0 != results.get(0)[0].compareTo(owner.getId().toString()) ||
+                0 != results.get(0)[1].compareTo(owner.getFirstName()) ||
+                0 != results.get(0)[2].compareTo(owner.getLastName()) ||
+                0 != results.get(0)[3].compareTo(owner.getAddress()) ||
+                0 != results.get(0)[4].compareTo(owner.getCity()) ||
+                0 != results.get(0)[5].compareTo(owner.getTelephone())) {
+                System.out.println("Inconsistency found with owner id: " + results.get(0)[0] + " while adding to system");
+                conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
+                    + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
+                    "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
+                    " WHERE id='" + owner.getId() + "'");
+            }
         }
 
     }
@@ -139,19 +141,21 @@ public class SQLiteOwnerController {
     }
 
     public void checkPetConsistency(Pet pet) {
-        ArrayList<String[]> results = getPet(pet.getId());
-        if (results == null)
-            System.out.println("Pet with id: " + pet.getId() + " was not found in SQLite DB");
-        if (0 != results.get(0)[0].compareTo(pet.getId().toString()) ||
-            0 != results.get(0)[1].compareTo(pet.getName()) ||
-            0 != results.get(0)[2].compareTo(pet.getBirthDate().toString()) ||
-            0 != results.get(0)[3].compareTo(pet.getType().getId().toString()) ||
-            0 != results.get(0)[4].compareTo(pet.getOwner().getId().toString())) {
-            System.out.println("Inconsistency found with pet id: " + results.get(0)[0] + " while adding to system");
-            conn.executeSql("UPDATE pets SET name='" + pet.getName()
-                + "', birth_date='" + pet.getBirthDate().toString() + "', type_id='" + pet.getType().getId() +
-                "', owner_id='" + pet.getOwner().getId() + "' " +
-                "' WHERE id='" + pet.getId() + "'");
+        if(pet.getId() != null) {
+            ArrayList<String[]> results = getPet(pet.getId());
+            if (results == null)
+                System.out.println("Pet with id: " + pet.getId() + " was not found in SQLite DB");
+            if (0 != results.get(0)[0].compareTo(pet.getId().toString()) ||
+                0 != results.get(0)[1].compareTo(pet.getName()) ||
+                0 != results.get(0)[2].compareTo(pet.getBirthDate().toString()) ||
+                0 != results.get(0)[3].compareTo(pet.getType().getId().toString()) ||
+                0 != results.get(0)[4].compareTo(pet.getOwner().getId().toString())) {
+                System.out.println("Inconsistency found with pet id: " + results.get(0)[0] + " while adding to system");
+                conn.executeSql("UPDATE pets SET name='" + pet.getName()
+                    + "', birth_date='" + pet.getBirthDate().toString() + "', type_id='" + pet.getType().getId() +
+                    "', owner_id='" + pet.getOwner().getId() + "' " +
+                    "' WHERE id='" + pet.getId() + "'");
+            }
         }
 
     }
@@ -202,18 +206,20 @@ public class SQLiteOwnerController {
     }
 
     public void checkVisitConsistency(Visit visit) {
-        ArrayList<String[]> results = getVisit(visit.getId());
-        if (results == null)
-            System.out.println("Visit with id: " + visit.getId() + " was not found in SQLite DB");
+        if(visit.getId() != null) {
+            ArrayList<String[]> results = getVisit(visit.getId());
+            if (results == null)
+                System.out.println("Visit with id: " + visit.getId() + " was not found in SQLite DB");
 
-        if (0 != results.get(0)[0].compareTo(visit.getId().toString()) ||
-            0 != results.get(0)[1].compareTo(visit.getPetId().toString()) ||
-            0 != results.get(0)[2].compareTo(visit.getDate().toString()) ||
-            0 != results.get(0)[3].compareTo(visit.getDescription())) {
-            System.out.println("Inconsistency found with visit id: " + results.get(0)[0] + " while adding to system");
-            conn.executeSql("UPDATE visits SET pet_id='" + visit.getPetId()
-                + "', visit_date='" + visit.getDate().toString() + "', description='" + visit.getDescription() +
-                " ' WHERE id='" + visit.getId() + "'");
+            if (0 != results.get(0)[0].compareTo(visit.getId().toString()) ||
+                0 != results.get(0)[1].compareTo(visit.getPetId().toString()) ||
+                0 != results.get(0)[2].compareTo(visit.getDate().toString()) ||
+                0 != results.get(0)[3].compareTo(visit.getDescription())) {
+                System.out.println("Inconsistency found with visit id: " + results.get(0)[0] + " while adding to system");
+                conn.executeSql("UPDATE visits SET pet_id='" + visit.getPetId()
+                    + "', visit_date='" + visit.getDate().toString() + "', description='" + visit.getDescription() +
+                    " ' WHERE id='" + visit.getId() + "'");
+            }
         }
 
     }
@@ -294,8 +300,9 @@ public class SQLiteOwnerController {
     }
 
     public ArrayList<String[]> getOwner(int id) {
-        String sql = "Select id, first_name, last_name, address, city, phone_number FROM owners WHERE id=" + id;
-        int numberOfFields = 6;
+            String sql = "Select id, first_name, last_name, address, city, phone_number FROM owners WHERE id=" + id;
+            int numberOfFields = 6;
+
         return conn.getResult(sql, numberOfFields);
     }
 
