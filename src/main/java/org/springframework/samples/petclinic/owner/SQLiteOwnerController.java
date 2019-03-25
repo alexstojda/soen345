@@ -77,27 +77,28 @@ public class SQLiteOwnerController {
     }
 
     public void checkOwnersConsistencyLastName(Collection<Owner> owners, String name) {
+        if(owners != null && name.compareTo("") != 0) {
         ArrayList<String[]> results = getOwnersByLastName(name);
-        int i = 0;
-        int inconsitency = 0;
-        for (Owner owner : owners) {
-            if (0 != results.get(i)[0].compareTo(owner.getId().toString()) ||
-                0 != results.get(i)[1].compareTo(owner.getFirstName()) ||
-                0 != results.get(i)[2].compareTo(owner.getLastName()) ||
-                0 != results.get(i)[3].compareTo(owner.getAddress()) ||
-                0 != results.get(i)[4].compareTo(owner.getCity()) ||
-                0 != results.get(i)[5].compareTo(owner.getTelephone())) {
-                inconsitency++;
-                System.out.println("Inconsistency found with owner id: " + results.get(i)[0]);
-                conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
-                    + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
-                    "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
-                    " WHERE id='" + owner.getId() + "'");
+            int i = 0;
+            int inconsitency = 0;
+            for (Owner owner : owners) {
+                if (0 != results.get(i)[0].compareTo(owner.getId().toString()) ||
+                    0 != results.get(i)[1].compareTo(owner.getFirstName()) ||
+                    0 != results.get(i)[2].compareTo(owner.getLastName()) ||
+                    0 != results.get(i)[3].compareTo(owner.getAddress()) ||
+                    0 != results.get(i)[4].compareTo(owner.getCity()) ||
+                    0 != results.get(i)[5].compareTo(owner.getTelephone())) {
+                    inconsitency++;
+                    System.out.println("Inconsistency found with owner id: " + results.get(i)[0]);
+                    conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
+                        + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
+                        "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
+                        " WHERE id='" + owner.getId() + "'");
+                }
+                i++;
             }
-            i++;
+            System.out.println("Number of inconsistencies in owners while searching by last name: " + inconsitency);
         }
-        System.out.println("Number of inconsistencies in owners while searching by last name: " + inconsitency);
-
     }
 
 //    Type section //////////////////////////////
@@ -266,7 +267,7 @@ public class SQLiteOwnerController {
     }
 
     public ArrayList<String[]> getOwnersByLastName(String name) {
-        String sql = "Select id, first_name, last_name, address, city, phone_number FROM owners WHERE last_name LIKE '" + name + "'";
+        String sql = "Select id, first_name, last_name, address, city, phone_number FROM owners WHERE last_name LIKE '" + name +"%'";
         int numberOfFields = 6;
         return conn.getResult(sql, numberOfFields);
     }
@@ -299,15 +300,16 @@ public class SQLiteOwnerController {
     }
 
     public void updateOwner(Owner owner) {
-        conn.executeSql("UPDATE owners (id, first_name, last_name, address, city, phone_number)" +
-            "VALUES ("+owner.getId()+", '" + owner.getFirstName() + "', '" + owner.getLastName() + "', '" +
-            owner.getAddress() + "', '" + owner.getCity() + "', '" + owner.getTelephone() + "')");
-
+        conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
+            + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
+            "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
+            " WHERE id='" + owner.getId() + "'");
     }
 
     public void updatePet(Pet pet) {
-        conn.executeSql("UPDATE INTO pets (id, name, birth_date, type_id, owner_id)" +
-            "VALUES ("+pet.getId()+", '" + pet.getName() + "', '" + pet.getBirthDate() + "', '" +
-            pet.getType().getId() + "', '" + pet.getOwner().getId() + "')");
+        conn.executeSql("UPDATE pets SET name='" + pet.getName()
+            + "', birth_date='" + pet.getBirthDate().toString() + "', type_id='" + pet.getType().getId() +
+            "', owner_id='" + pet.getOwner().getId() + "' " +
+            "WHERE id='" + pet.getId() + "'");
     }
 }

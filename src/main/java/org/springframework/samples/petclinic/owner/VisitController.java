@@ -66,8 +66,8 @@ class VisitController {
         model.put("pet", pet);
         Visit visit = new Visit();
         pet.addVisit(visit);
-        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
-        sqLiteOwnerController.checkVisitConsistency(visit);
+//        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+//        sqLiteOwnerController.checkVisitConsistency(visit);
         return visit;
     }
 
