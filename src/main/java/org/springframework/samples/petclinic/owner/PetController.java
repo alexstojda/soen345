@@ -82,6 +82,9 @@ class PetController {
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
             this.pets.save(pet);
+            SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+            sqLiteOwnerController.addOnePet(pet);
+            sqLiteOwnerController.checkPetConsistency(pet);
             return "redirect:/owners/{ownerId}";
         }
     }
@@ -102,8 +105,12 @@ class PetController {
         } else {
             owner.addPet(pet);
             this.pets.save(pet);
+            SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+            sqLiteOwnerController.updatePet(pet);
+            sqLiteOwnerController.checkPetConsistency(pet);
             return "redirect:/owners/{ownerId}";
         }
     }
+
 
 }

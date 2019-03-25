@@ -23,6 +23,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -65,6 +66,8 @@ class VisitController {
         model.put("pet", pet);
         Visit visit = new Visit();
         pet.addVisit(visit);
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.checkVisitConsistency(visit);
         return visit;
     }
 
@@ -81,6 +84,10 @@ class VisitController {
             return "pets/createOrUpdateVisitForm";
         } else {
             this.visits.save(visit);
+            SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+            sqLiteOwnerController.addOneVisit(visit);
+            sqLiteOwnerController.checkVisitConsistency(visit);
+
             return "redirect:/owners/{ownerId}";
         }
     }

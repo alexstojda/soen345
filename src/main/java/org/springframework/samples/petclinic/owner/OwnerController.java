@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import org.springframework.samples.petclinic.visit.Visit;
+import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,12 +44,17 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
+    private final PetRepository pets;
+    private final VisitRepository visits;
+    private final boolean useNewDB = false;
 
 
-    public OwnerController(OwnerRepository clinicService) {
-        this.owners = clinicService;
+
+    public OwnerController(PetRepository pets, OwnerRepository owners, VisitRepository visits) {
+        this.pets = pets;
+        this.owners = owners;
+        this.visits = visits;
     }
-
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
@@ -67,6 +73,9 @@ class OwnerController {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             this.owners.save(owner);
+            SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+            sqLiteOwnerController.addOneOwner(owner);
+            sqLiteOwnerController.checkOwnerConsistency(owner);
             return "redirect:/owners/" + owner.getId();
         }
     }
@@ -99,8 +108,15 @@ class OwnerController {
     @GetMapping("/owners/check")
     public String ownerCheck(){
         Collection<Owner> allOwners = this.owners.getAllOwners();
+
         SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
         sqLiteOwnerController.checkOwnersConsistency(allOwners);
+
+        Collection<Pet> allPets = this.pets.getAllPets();
+        sqLiteOwnerController.checkPetsConsistency(allPets);
+
+        Collection<Visit> allVisits = this.visits.getAllVisits();
+        sqLiteOwnerController.checkVisitsConsistency(allVisits);
         return "redirect:/";
     }
 
@@ -120,6 +136,8 @@ class OwnerController {
 
         // find owners by last name
         Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.checkOwnersConsistencyLastName(results,owner.getLastName() );
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
@@ -149,6 +167,10 @@ class OwnerController {
         } else {
             owner.setId(ownerId);
             this.owners.save(owner);
+            SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+            sqLiteOwnerController.updateOwner(owner);
+            sqLiteOwnerController.checkOwnerConsistency(owner);
+
             return "redirect:/owners/{ownerId}";
         }
     }
@@ -163,7 +185,8 @@ class OwnerController {
     public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(this.owners.findById(ownerId));
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.checkOwnerConsistency(this.owners.findById(ownerId));
         return mav;
     }
-
 }
