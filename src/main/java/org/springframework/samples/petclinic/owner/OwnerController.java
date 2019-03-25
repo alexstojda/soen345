@@ -96,6 +96,14 @@ class OwnerController {
 
     }
 
+    @GetMapping("/owners/check")
+    public String ownerCheck(){
+        Collection<Owner> allOwners = this.owners.getAllOwners();
+        SQLiteOwnerController sqLiteOwnerController = new SQLiteOwnerController();
+        sqLiteOwnerController.checkOwnersConsistency(allOwners);
+        return "redirect:/";
+    }
+
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());

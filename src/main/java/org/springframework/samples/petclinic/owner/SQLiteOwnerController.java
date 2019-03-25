@@ -24,6 +24,30 @@ public class SQLiteOwnerController {
         }
     }
 
+    public void checkOwnersConsistency(Collection<Owner> owners) {
+        ArrayList<String[]> results = conn.getResult("SELECT * FROM owners ORDER BY 'id'", 6);
+        int i = 0;
+        int inconsitency = 0;
+        for (Owner owner : owners) {
+            if (0 != results.get(i)[0].compareTo(owner.getId().toString()) ||
+                0 != results.get(i)[1].compareTo(owner.getFirstName()) ||
+                0 != results.get(i)[2].compareTo(owner.getLastName()) ||
+                0 != results.get(i)[3].compareTo(owner.getAddress()) ||
+                0 != results.get(i)[4].compareTo(owner.getCity()) ||
+                0 != results.get(i)[5].compareTo(owner.getTelephone())) {
+                inconsitency++;
+                System.out.println("Inconsistency found with owner id: " + results.get(i)[0]);
+                conn.executeSql("UPDATE owners SET first_name='" + owner.getFirstName()
+                    + "', last_name='" + owner.getLastName() + "', address='" + owner.getAddress() +
+                    "', city='" + owner.getCity() + "', phone_number='" + owner.getTelephone() + "'" +
+                    "WHERE id='" + owner.getId() + "'");
+            }
+            i++;
+        }
+        System.out.println("Number of inconsistencies in owners: "+inconsitency);
+
+    }
+
     public void addAllTypes(Collection<PetType> types) {
 
         //truncates table
@@ -38,13 +62,13 @@ public class SQLiteOwnerController {
             System.out.println(type.getName());
         }
 
-        try{
+        try {
             ArrayList<String[]> sqliteTypes = getTypes();
             for (int i = 0; i < sqliteTypes.size(); i++) {
                 System.out.println("from SQLite: " + sqliteTypes.get(i)[1]);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("There was an error with getTypes");
         }
     }
@@ -65,14 +89,14 @@ public class SQLiteOwnerController {
                 + "', '" + pet.getOwner().getId());
         }
 
-        try{
+        try {
             ArrayList<String[]> sqlitePets = getPets();
             for (int i = 0; i < sqlitePets.size(); i++) {
                 System.out.println("from SQLite: " + sqlitePets.get(i)[1] + "', '" + sqlitePets.get(i)[2] + "', '" +
                     sqlitePets.get(i)[3] + "', '" + sqlitePets.get(i)[4]);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("There was an error with getPets");
         }
     }
@@ -92,14 +116,14 @@ public class SQLiteOwnerController {
             System.out.println(visit.getPetId() + "', '" + visit.getDate() + "', '" + visit.getDescription());
         }
 
-        try{
+        try {
             ArrayList<String[]> sqliteVisits = getVisits();
             for (int i = 0; i < sqliteVisits.size(); i++) {
                 System.out.println("from SQLite: " + sqliteVisits.get(i)[1] + "', '" + sqliteVisits.get(i)[2] + "', '" +
                     sqliteVisits.get(i)[3]);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("There was an error with getVisits");
         }
     }

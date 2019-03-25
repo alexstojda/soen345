@@ -17,11 +17,5 @@ UU:::::U     U:::::UU                                       UU:::::U     U:::::U
     UU:::::::::UU             w:::w           w:::w             UU:::::::::UU
       UUUUUUUUU                www             www                UUUUUUUUU
 
-
-
-
-
-
-
 :: Built with Spring Boot :: ${spring-boot.version}
 
