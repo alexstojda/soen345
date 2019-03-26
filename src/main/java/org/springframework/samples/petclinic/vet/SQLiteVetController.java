@@ -23,7 +23,7 @@ public class SQLiteVetController {
             conn.executeSql("INSERT INTO vets (id, first_name, last_name)" +
                 "VALUES (NULL, '" + vet.getFirstName() + "', '" + vet.getLastName() + "')");
 
-            System.out.println(vet.getFirstName() + "', '" + vet.getLastName());
+            System.out.println(vet.getFirstName() + " " + vet.getLastName());
         }
         try{
             ArrayList<String[]> things = getVets();
