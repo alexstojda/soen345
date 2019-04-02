@@ -71,6 +71,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- feature toggle -->
+      <dependency>
+          <groupId>com.github.feature-flip</groupId>
+          <artifactId>flips-core</artifactId>
+          <version>1.0.1</version>
+      </dependency>
+
     <!-- caching -->
     <dependency>
       <groupId>javax.cache</groupId>
