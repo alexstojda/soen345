@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+  <body>
+
+      <div class="container-fluid">
+
+        <h2 align="center" th:text="#{home}">Home</h2>
+
+        <div class="row">
+            <div align="center" class="col-md-12">
+                <img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}"/>
+            </div>
+        </div>
+
+          <div class="container">
+
+              <div class="column-block">
+                  Add Owners
+              </div>
+
+              <div class="column-block">
+                  Add Pet Information
+              </div>
+
+              <div class="column-block">
+                  Schedule and Record Visits
+              </div>
+
+          </div>
+
+      </div>
+
+  </body>
+
+</html>
