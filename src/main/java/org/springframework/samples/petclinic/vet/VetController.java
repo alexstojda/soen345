@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +33,7 @@ import java.util.Map;
 class VetController {
 
     private final VetRepository vets;
+    private Logger logger = LoggerFactory.getLogger(VetController.class);
 
     public VetController(VetRepository clinicService) {
         this.vets = clinicService;
@@ -43,6 +46,7 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
+        logger.info("Vets page returned");
         return "vets/vetList";
     }
 
@@ -52,6 +56,7 @@ class VetController {
         // objects so it is simpler for JSon/Object mapping
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
+        logger.info("Vets List returned");
         return vets;
     }
 

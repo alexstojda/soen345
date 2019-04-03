@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -35,6 +37,7 @@ import java.util.Collection;
 class PetController {
 
     private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
+    private Logger logger = LoggerFactory.getLogger(PetController.class);
     private final PetRepository pets;
     private final OwnerRepository owners;
 
@@ -68,6 +71,7 @@ class PetController {
         Pet pet = new Pet();
         owner.addPet(pet);
         model.put("pet", pet);
+        logger.info("Add pet page returned");
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
@@ -79,9 +83,11 @@ class PetController {
         owner.addPet(pet);
         if (result.hasErrors()) {
             model.put("pet", pet);
+            logger.info("Add pet form returned errors");
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
             this.pets.save(pet);
+            logger.info("New pet saved");
             return "redirect:/owners/{ownerId}";
         }
     }
@@ -90,6 +96,7 @@ class PetController {
     public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
         Pet pet = this.pets.findById(petId);
         model.put("pet", pet);
+        logger.info("Update pet page returned");
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
@@ -98,10 +105,12 @@ class PetController {
         if (result.hasErrors()) {
             pet.setOwner(owner);
             model.put("pet", pet);
+            logger.info("Update pet form returned errors");
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
             owner.addPet(pet);
             this.pets.save(pet);
+            logger.info("Pet updated successfully");
             return "redirect:/owners/{ownerId}";
         }
     }

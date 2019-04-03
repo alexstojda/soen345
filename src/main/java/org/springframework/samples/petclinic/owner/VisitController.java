@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ import java.util.Map;
 @Controller
 class VisitController {
 
+    private Logger logger = LoggerFactory.getLogger(VisitController.class);
     private final VisitRepository visits;
     private final PetRepository pets;
 
@@ -71,6 +74,7 @@ class VisitController {
     // Spring MVC calls method loadPetWithVisit(...) before initNewVisitForm is called
     @GetMapping("/owners/*/pets/{petId}/visits/new")
     public String initNewVisitForm(@PathVariable("petId") int petId, Map<String, Object> model) {
+        logger.info("New Visit Form returned");
         return "pets/createOrUpdateVisitForm";
     }
 
@@ -78,9 +82,11 @@ class VisitController {
     @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
     public String processNewVisitForm(@Valid Visit visit, BindingResult result) {
         if (result.hasErrors()) {
+            logger.info("New pet visit form returned errors");
             return "pets/createOrUpdateVisitForm";
         } else {
             this.visits.save(visit);
+            logger.info("New pet visit created");
             return "redirect:/owners/{ownerId}";
         }
     }

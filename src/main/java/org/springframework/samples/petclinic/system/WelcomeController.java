@@ -13,10 +13,7 @@ class WelcomeController {
     @GetMapping("/")
     public String welcome() {
 
-        if (logger.isInfoEnabled()) {
-            logger.info("Logging info level enabled and Welcome has been executed");
-        }
-
+        logger.info("Homepage accessed, Welcome has been returned");
         return "welcome";
     }
 }
