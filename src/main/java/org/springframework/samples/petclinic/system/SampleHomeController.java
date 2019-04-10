@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @ConditionalOnProperty(name = "feature.toggles.homePageCentered", havingValue = "true")
 public class SampleHomeController {
 
-    private Logger logger = LoggerFactory.getLogger(WelcomeController.class);
+    private Logger logger = LoggerFactory.getLogger(SampleHomeController.class);
 
-    @GetMapping("/home")
-    public String home() {
+    @GetMapping("/")
+    public String welcome() {
 
         logger.info("New Sample homepage accessed, Home has been returned");
         return "home";
