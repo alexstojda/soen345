@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.system;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.samples.petclinic.LastPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -32,12 +33,16 @@ class CrashController {
 
 
     private Logger logger = LoggerFactory.getLogger(CrashController.class);
+    private LastPage lastPage = LastPage.getInstance();
 
     @GetMapping("/oups")
     public String triggerException() {
+        if (lastPage.getLastPagePath().equals("/owners/find")) {
+            Toggle.logData("Visited Error Page\n");
+        }
         logger.info("Error page returned");
         throw new RuntimeException("Expected: controller used to showcase what "
-                + "happens when an exception is thrown");
+            + "happens when an exception is thrown");
     }
 
 }

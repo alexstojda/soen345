@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.owner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.samples.petclinic.LastPage;
 import org.springframework.samples.petclinic.system.Toggle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,10 +45,12 @@ class OwnerController {
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private Logger logger = LoggerFactory.getLogger(OwnerController.class);
     private final OwnerRepository owners;
+    private LastPage lastPage = LastPage.getInstance();
 
 
     public OwnerController(OwnerRepository clinicService) {
         this.owners = clinicService;
+
     }
 
     @InitBinder
@@ -78,6 +81,8 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
+        Toggle.logData("Visited Owners Page\n");
+        lastPage.setLastPagePath("/owners/find");
         if (Toggle.getToggle()) {
             logger.info("Find owner page disabled");
             return "owners/findOwnersDisabled";
@@ -96,7 +101,6 @@ class OwnerController {
 
     @GetMapping("/owners")
     public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
-
         // allow parameterless GET request for /owners to return all records
         if (owner.getLastName() == null) {
             owner.setLastName(""); // empty string signifies broadest possible search

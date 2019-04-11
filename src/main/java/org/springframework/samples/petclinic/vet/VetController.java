@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.vet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.samples.petclinic.LastPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,7 @@ class VetController {
 
     private final VetRepository vets;
     private Logger logger = LoggerFactory.getLogger(VetController.class);
+    private LastPage lastPage = LastPage.getInstance();
 
     public VetController(VetRepository clinicService) {
         this.vets = clinicService;
@@ -41,6 +43,7 @@ class VetController {
 
     @GetMapping("/vets.html")
     public String showVetList(Map<String, Object> model) {
+        lastPage.setLastPagePath("/vets.html");
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
         Vets vets = new Vets();

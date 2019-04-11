@@ -18,7 +18,7 @@ public class Toggle {
         findOwnerToggle = !findOwnerToggle;
     }
 
-    public static void logData(long data) {
+    public static void logData(String data) {
         FileWriter fileWriter = null;
         try {
             final String path = "src/main/resources/logging/";
@@ -27,9 +27,11 @@ public class Toggle {
             } else {
                 fileWriter = new FileWriter(path + "oldFindOwner.txt", true);
             }
-            fileWriter.write(String.valueOf(data));
+            fileWriter.write(data);
+            fileWriter.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+
     }
 }
