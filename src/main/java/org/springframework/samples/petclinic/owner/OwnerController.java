@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.owner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.samples.petclinic.system.Toggle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,8 +78,20 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
-        logger.info("Find owner page returned");
-        return "owners/findOwners";
+        if (Toggle.getToggle()) {
+            logger.info("Find owner page disabled");
+            return "owners/findOwnersDisabled";
+        } else {
+            logger.info("Find owner page returned");
+            return "owners/findOwners";
+        }
+    }
+
+    @GetMapping("/owners/find/toggle")
+    public String toggleFindForm(Map<String, Object> model) {
+        model.put("owner", new Owner());
+        Toggle.toggleFindOwner();
+        return "welcome";
     }
 
     @GetMapping("/owners")
