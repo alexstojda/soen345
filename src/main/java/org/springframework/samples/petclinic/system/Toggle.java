@@ -14,6 +14,10 @@ public class Toggle {
         return findOwnerToggle;
     }
 
+    public static void setToggle(boolean toggle) {
+        findOwnerToggle = toggle;
+    }
+
     public static void toggleFindOwner() {
         findOwnerToggle = !findOwnerToggle;
     }
