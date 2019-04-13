@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.vet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.LastPage;
+import org.springframework.samples.petclinic.system.Toggle;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +44,9 @@ class VetController {
 
     @GetMapping("/vets.html")
     public String showVetList(Map<String, Object> model) {
+        if (lastPage.getLastPagePath().equals("/owners/find")) {
+            Toggle.logData("Visited Vet Page\n");
+        }
         lastPage.setLastPagePath("/vets.html");
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
