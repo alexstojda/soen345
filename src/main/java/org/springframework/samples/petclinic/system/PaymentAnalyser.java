@@ -23,7 +23,7 @@ public class PaymentAnalyser {
         this.startedPayments = 0;
     }
 
-    public void logPayment(int status) {
+    public void trackPayment(int status) {
         if (status == 0) {
             incrementCompleted();
         } else if (status == 1) {
@@ -31,6 +31,20 @@ public class PaymentAnalyser {
         } else if (status == 2) {
             incrementPossible();
         }
+    }
+
+    public void logPayment(String data) {
+        FileWriter fileWriter = null;
+        try {
+            final String path = "src/main/resources/logging/";
+            fileWriter = new FileWriter(path + "transactionLog.txt", true);
+
+            fileWriter.write(data);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
     }
 
     private void incrementCompleted() {
@@ -51,28 +65,27 @@ public class PaymentAnalyser {
         double started = startedPayments;
         DecimalFormat df2 = new DecimalFormat(".##");
         String data = "";
-        if(possibleInteractions < 100){
+        if (possibleInteractions < 100) {
             data = "We do not have enough data to reject our hypothesis\n" +
                 "Null Hypothesis: users do not want to make early payments";
-        }
-        else {
-            data ="Null Hypothesis: users do not want to make early payments\n";
+        } else {
+            data = "Null Hypothesis: users do not want to make early payments\n";
             double efficiencyRatio = complete / interacted;
             double completionRatio = complete / started;
-            double startRatio = started/interacted;
+            double startRatio = started / interacted;
 
-            data = data+df2.format(startRatio)+ " of users who see the possbile payment" +
+            data = data + df2.format(startRatio) + " of users who see the possbile payment" +
                 "start filling up transaction\n";
-            data = data+df2.format(completionRatio)+ " of users who start a payment" +
+            data = data + df2.format(completionRatio) + " of users who start a payment" +
                 "complete the transaction\n";
-            data = data+df2.format(efficiencyRatio)+ " of users who see the possbile " +
+            data = data + df2.format(efficiencyRatio) + " of users who see the possbile " +
                 "early payment button complete the transaction\n";
-            efficiencyRatio = efficiencyRatio*100;
-            if (efficiencyRatio > 90){
-                data = data+df2.format(efficiencyRatio)+"% of users make payments in advance " +
+            efficiencyRatio = efficiencyRatio * 100;
+            if (efficiencyRatio > 90) {
+                data = data + df2.format(efficiencyRatio) + "% of users make payments in advance " +
                     "and this is enough to disprove our null hypothesis.";
             } else {
-                data = data+df2.format(efficiencyRatio)+"% of users make payments in advance " +
+                data = data + df2.format(efficiencyRatio) + "% of users make payments in advance " +
                     "and this is not enough to disprove our null hypothesis.";
             }
         }
@@ -87,5 +100,24 @@ public class PaymentAnalyser {
         }
 
     }
+//
+//    public static void logData(String data) {
+//        FileWriter fileWriter = null;
+//        String data = "";
+//        try {
+//            final String path = "src/main/resources/logging/";
+//            fileWriter = new FileWriter(path + "paymentlog.txt", true);
+//               if(state == 0){
+//                   data = ""
+//            } else if (state == 1) {
+//
+//            }
+//            fileWriter.write(data);
+//            fileWriter.close();
+//        } catch (IOException e) {
+//            System.err.println(e.getMessage());
+//        }
+//
+//    }
 
 }

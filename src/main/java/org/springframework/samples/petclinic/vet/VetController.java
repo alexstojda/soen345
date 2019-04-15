@@ -62,7 +62,7 @@ class VetController {
         if(!Toggle.getPaymentToggle())
             return "vets/vetList";
         else{
-            paymentAnalyser.logPayment(2);
+            paymentAnalyser.trackPayment(2);
             return "vets/vetList2";
         }
 
@@ -75,16 +75,19 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        paymentAnalyser.logPayment(1);
+        VetPayment payment = new VetPayment();
+        model.put("payment", payment);
+        paymentAnalyser.trackPayment(1);
         return "vets/payVets";
     }
 
     @PostMapping("/payment")
-    public String success(){
-
+    public String success(@Valid VetPayment payment){
         if(!Toggle.getPaymentToggle())
             return "redirect:/";
-       paymentAnalyser.logPayment(0);
+       paymentAnalyser.trackPayment(0);
+       paymentAnalyser.logPayment(payment.getFname()+" "+payment.getLname()
+       +" made a payment of "+payment.getAmount()+"$ to "+payment.getVetName()+"\n");
         return "vets/success";
     }
 
