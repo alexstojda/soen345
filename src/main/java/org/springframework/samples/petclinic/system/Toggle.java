@@ -9,17 +9,25 @@ public class Toggle {
     }
 
     private static boolean findOwnerToggle = (((int) (Math.random() * 2)) == 0);
+    private static boolean disableHomePageToggle = true;
 
     public static boolean getOwnerToggle() {
         return findOwnerToggle;
     }
-
+    public static boolean getHomePageToggle() {
+        return disableHomePageToggle;
+    }
     public static void setOwnerToggle(boolean toggle) {
         findOwnerToggle = toggle;
     }
-
+    public static void setHomePageToggle(boolean toggle) {
+        disableHomePageToggle = toggle;
+    }
     public static void toggleFindOwner() {
         findOwnerToggle = !findOwnerToggle;
+    }
+    public static void toggleDisableHomePage() {
+        disableHomePageToggle = !disableHomePageToggle;
     }
 
     public static void logData(String data) {
