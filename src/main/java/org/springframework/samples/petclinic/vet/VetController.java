@@ -47,6 +47,7 @@ class VetController {
         if (lastPage.getLastPagePath().equals("/owners/find")) {
             Toggle.logFindOwnerData("Visited Vet Page\n");
         }
+        Toggle.logWelcomePageVetData("Visited Vet Page\n");
         lastPage.setLastPagePath("/vets.html");
         // Here we are returning an object of type 'Vets' rather than a collection of Vet
         // objects so it is simpler for Object-Xml mapping
