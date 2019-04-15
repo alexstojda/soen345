@@ -81,7 +81,6 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
-        Toggle.logData("Visited Owners Page\n");
         lastPage.setLastPagePath("/owners/find");
         if (Toggle.getToggle()) {
             logger.info("Find owner page disabled");
