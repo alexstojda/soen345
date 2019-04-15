@@ -82,7 +82,7 @@ class OwnerController {
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
         lastPage.setLastPagePath("/owners/find");
-        if (Toggle.getToggle()) {
+        if (Toggle.getFindOwnerToggle()) {
             logger.info("Find owner page disabled");
             return "owners/findOwnersDisabled";
         } else {

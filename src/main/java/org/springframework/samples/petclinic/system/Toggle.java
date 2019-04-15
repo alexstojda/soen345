@@ -10,11 +10,11 @@ public class Toggle {
 
     private static boolean findOwnerToggle = false;
 
-    public static boolean getToggle() {
+    public static boolean getFindOwnerToggle() {
         return findOwnerToggle;
     }
 
-    public static void setToggle(boolean toggle) {
+    public static void setFindOwnerToggle(boolean toggle) {
         findOwnerToggle = toggle;
     }
 
