@@ -10,11 +10,11 @@ public class Toggle {
 
     private static boolean findOwnerToggle = (((int) (Math.random() * 2)) == 0);
 
-    public static boolean getToggle() {
+    public static boolean getOwnerToggle() {
         return findOwnerToggle;
     }
 
-    public static void setToggle(boolean toggle) {
+    public static void setOwnerToggle(boolean toggle) {
         findOwnerToggle = toggle;
     }
 

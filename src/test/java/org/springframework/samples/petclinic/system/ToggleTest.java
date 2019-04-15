@@ -20,10 +20,10 @@ public class ToggleTest {
 
     @Test
     public void testToggle(){
-        toggle.setToggle(false);
-        boolean before = toggle.getToggle();
+        toggle.setOwnerToggle(false);
+        boolean before = toggle.getOwnerToggle();
         toggle.toggleFindOwner();
-        boolean after = toggle.getToggle();
+        boolean after = toggle.getOwnerToggle();
 
         assertFalse(before);
         assertTrue(after);
@@ -31,7 +31,7 @@ public class ToggleTest {
 
     @Test
     public void testToggleLogsForOldFindOwnerAreGenerated() throws IOException {
-        toggle.setToggle(false);
+        toggle.setOwnerToggle(false);
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/logging/oldFindOwner.txt"));
 
         int linesBefore = 0;
@@ -54,7 +54,7 @@ public class ToggleTest {
 
     @Test
     public void testToggleLogsForNewFindOwnerAreGenerated() throws IOException {
-        toggle.setToggle(true);
+        toggle.setOwnerToggle(true);
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/logging/newFindOwner.txt"));
 
         int linesBefore = 0;
