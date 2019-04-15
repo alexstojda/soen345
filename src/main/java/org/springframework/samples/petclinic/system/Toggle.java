@@ -8,7 +8,7 @@ public class Toggle {
     public Toggle() {
     }
 
-    private static boolean findOwnerToggle = false;
+    private static boolean findOwnerToggle = (((int) (Math.random() * 2)) == 0);
 
     public static boolean getToggle() {
         return findOwnerToggle;
