@@ -32,9 +32,4 @@ class WelcomeController {
         Toggle.toggleDisableHomePage();
         return "redirect:/";
     }
-
-    @GetMapping("/test")
-    public String test(){
-        return "vets/payVets";
-    }
 }
