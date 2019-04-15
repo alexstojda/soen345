@@ -37,8 +37,9 @@ class CrashController {
 
     @GetMapping("/oups")
     public String triggerException() {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         if (lastPage.getLastPagePath().equals("/owners/find")) {
-            Toggle.logData("Visited Error Page\n");
+            Toggle.logOwnerData("Visited Error Page\n");
         }
         logger.info("Error page returned");
         throw new RuntimeException("Expected: controller used to showcase what "

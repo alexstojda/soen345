@@ -57,6 +57,7 @@ class OwnerController {
 
     @GetMapping("/owners/new")
     public String initCreationForm(Map<String, Object> model) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         Owner owner = new Owner();
         model.put("owner", owner);
         logger.info("Add owner page returned");
@@ -65,6 +66,7 @@ class OwnerController {
 
     @PostMapping("/owners/new")
     public String processCreationForm(@Valid Owner owner, BindingResult result) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         if (result.hasErrors()) {
             logger.info("Add owner form errors, new owner page returned");
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -75,17 +77,9 @@ class OwnerController {
         }
     }
 
-//    @GetMapping("/")
-//    public String initnotHome(Map<String, Object> model) {
-//        return "";
-//    }
-//    @PostMapping("/")
-//    public String processnotHome(){
-//        return "/vets.html";
-//    }
-
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         model.put("owner", new Owner());
         lastPage.setLastPagePath("/owners/find");
         if (Toggle.getOwnerToggle()) {
@@ -107,6 +101,7 @@ class OwnerController {
 
     @GetMapping("/owners")
     public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         // allow parameterless GET request for /owners to return all records
         if (owner.getLastName() == null) {
             owner.setLastName(""); // empty string signifies broadest possible search
@@ -134,6 +129,7 @@ class OwnerController {
 
     @GetMapping("/owners/{ownerId}/edit")
     public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         Owner owner = this.owners.findById(ownerId);
         model.addAttribute(owner);
         logger.info("Owner edit page returned");
@@ -142,6 +138,7 @@ class OwnerController {
 
     @PostMapping("/owners/{ownerId}/edit")
     public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") int ownerId) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         if (result.hasErrors()) {
             logger.info("Owner update errors found");
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -161,6 +158,7 @@ class OwnerController {
      */
     @GetMapping("/owners/{ownerId}")
     public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+        Toggle.logWelcomeData("END " + System.currentTimeMillis() + "\n");
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(this.owners.findById(ownerId));
         logger.info("Owner page returned");

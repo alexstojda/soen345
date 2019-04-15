@@ -21,6 +21,14 @@ public class LogAnalysis {
         double totalOld;
         double totalNew;
 
+        long timeStartOld = 0;
+        long timeStartNew = 0;
+        long timeEndOld = 0;
+        long timeEndNew = 0;
+        long timeSpendOld = 0;
+        long timeSpendNew = 0;
+
+
         BufferedReader reader;
 
         reader = new BufferedReader(new FileReader("src/main/resources/logging/newFindOwner.txt"));
@@ -48,10 +56,37 @@ public class LogAnalysis {
                 visitedVetOld++;
             }
         }
+
+        reader = new BufferedReader(new FileReader("src/main/resources/logging/newWelcome.txt"));
+        boolean firstStartFound = false;
+        while ((currentLine = reader.readLine()) != null) {
+            if(currentLine.startsWith("START") && !firstStartFound){
+               timeStartNew = Long.parseLong(currentLine.substring(6));
+               firstStartFound = true;
+            }
+            if(currentLine.startsWith("END")){
+                timeEndNew = Long.parseLong(currentLine.substring(4));
+            }
+        }
+
+        reader = new BufferedReader(new FileReader("src/main/resources/logging/oldWelcome.txt"));
+        firstStartFound = false;
+        while ((currentLine = reader.readLine()) != null) {
+            if(currentLine.startsWith("START") && !firstStartFound){
+                timeStartOld = Long.parseLong(currentLine.substring(6));
+                firstStartFound = true;
+            }
+            if(currentLine.startsWith("END")){
+                timeEndOld = Long.parseLong(currentLine.substring(4));
+            }
+        }
+
         reader.close();
 
         totalNew = visitedErrorNew+visitedVetNew+visitedWelcomeNew;
         totalOld = visitedErrorOld+visitedVetOld+visitedWelcomeOld;
+        timeSpendOld = timeEndOld - timeStartOld;
+        timeSpendNew = timeEndNew - timeStartNew;
 
         System.out.println("\nNew Find Owner\n");
 
@@ -76,5 +111,13 @@ public class LogAnalysis {
             System.out.println("Percentage % of people who redirected to Error page:" + visitedErrorOld/totalOld);
             System.out.println("Percentage % of people who redirected to Vet page:" + visitedVetOld/totalOld);
         }
+
+        System.out.println("New Welcome page (no welcome page)");
+
+        System.out.println("Time spent on website:" + timeSpendNew + "Miliseconds");
+
+        System.out.println("Old Welcome page");
+
+        System.out.println("Time spent on website:" + timeSpendOld + "Miliseconds");
     }
 }

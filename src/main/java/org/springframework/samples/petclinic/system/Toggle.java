@@ -30,7 +30,7 @@ public class Toggle {
         disableHomePageToggle = !disableHomePageToggle;
     }
 
-    public static void logData(String data) {
+    public static void logOwnerData(String data) {
         FileWriter fileWriter = null;
         try {
             final String path = "src/main/resources/logging/";
@@ -44,6 +44,21 @@ public class Toggle {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
 
+    public static void logWelcomeData(String data) {
+        FileWriter fileWriter = null;
+        try {
+            final String path = "src/main/resources/logging/";
+            if (disableHomePageToggle) {
+                fileWriter = new FileWriter(path + "newWelcome.txt", true);
+            } else {
+                fileWriter = new FileWriter(path + "oldWelcome.txt", true);
+            }
+            fileWriter.write(data);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
