@@ -23,10 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -78,6 +75,15 @@ class OwnerController {
         }
     }
 
+//    @GetMapping("/")
+//    public String initnotHome(Map<String, Object> model) {
+//        return "";
+//    }
+//    @PostMapping("/")
+//    public String processnotHome(){
+//        return "/vets.html";
+//    }
+
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
@@ -95,8 +101,9 @@ class OwnerController {
     public String toggleFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
         Toggle.toggleFindOwner();
-        return "welcome";
+        return "redirect:/";
     }
+
 
     @GetMapping("/owners")
     public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
@@ -159,5 +166,6 @@ class OwnerController {
         logger.info("Owner page returned");
         return mav;
     }
+
 
 }
