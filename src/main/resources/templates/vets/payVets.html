@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+    <body>
+
+        <h2> Pre-Pay your vet</h2>
+        <h3>Save time now, to play with your pet later</h3>
+
+        <form action="/success" class="form-horizontal" method="post">
+            Your First name: <input required type="text" name="fname"><br>
+            You Last name: <input required type="text" name="lname"><br>
+            Your address: <input required type="text" name="address"><br>
+
+            Credit Card: <input required type="text" name="credit"
+                                pattern="^((4\d{3})|(5[1-5]\d{2})|(6011))-?\d{4}-?\d{4}-?\d{4}|3[4,7]\d{13}$"
+                                title="Actually checks if its a credit card"><br>
+            CVV numbers:<input required type="text" name="cvs"
+                               pattern="[0-9]{3}"
+                               title="3 numbers on the back - for test purposes you can fake this"><br>
+            Amount:<input required type="text" name="amount" pattern="[0-9]+[.]?[0-9]{0,2}"
+                               title="more than 0 please. Also acceptable formats are 44, 44.00, 44.44"><br>
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" type="submit">Make Payment</button>
+            </div>
+        </form>
+
+
+    </body>
+</html>
