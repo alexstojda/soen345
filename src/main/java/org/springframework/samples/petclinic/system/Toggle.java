@@ -9,7 +9,7 @@ public class Toggle {
     }
 
     private static boolean findOwnerToggle = false;
-    private static boolean welcomePageVetToggle = false;
+    private static boolean welcomePageVetToggle = (((int) (Math.random() * 2)) == 0);
 
     public static boolean getFindOwnerToggle() {
         return findOwnerToggle;
