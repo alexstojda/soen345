@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerController;
 import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.petclinic.system.Toggle;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -89,10 +90,16 @@ public class OwnerControllerTests {
 
     @Test
     public void testInitFindForm() throws Exception {
+        if(!Toggle.getOwnerToggle())
         mockMvc.perform(get("/owners/find"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("owner"))
             .andExpect(view().name("owners/findOwners"));
+        else
+            mockMvc.perform(get("/owners/find"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("owner"))
+                .andExpect(view().name("owners/findOwnersDisabled"));
     }
 
     @Test

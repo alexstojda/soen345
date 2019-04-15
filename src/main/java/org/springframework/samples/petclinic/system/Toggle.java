@@ -8,18 +8,31 @@ public class Toggle {
     public Toggle() {
     }
 
-    private static boolean findOwnerToggle = false;
+    private static boolean findOwnerToggle = (((int) (Math.random() * 2)) == 0);
+    private static boolean disableHomePageToggle = true;
+    private static boolean paymentSystemEnable = true;
 
-    public static boolean getToggle() {
+    public static boolean getOwnerToggle() {
         return findOwnerToggle;
     }
-
-    public static void setToggle(boolean toggle) {
+    public static boolean getHomePageToggle() {
+        return disableHomePageToggle;
+    }
+    public static boolean getPaymentToggle() {return paymentSystemEnable;}
+    public static void setOwnerToggle(boolean toggle) {
         findOwnerToggle = toggle;
     }
-
+    public static void setHomePageToggle(boolean toggle) {
+        disableHomePageToggle = toggle;
+    }
     public static void toggleFindOwner() {
         findOwnerToggle = !findOwnerToggle;
+    }
+    public static void toggleDisableHomePage() {
+        disableHomePageToggle = !disableHomePageToggle;
+    }
+    public static void togglePayment() {
+        paymentSystemEnable = !paymentSystemEnable;
     }
 
     public static void logData(String data) {
@@ -38,4 +51,6 @@ public class Toggle {
         }
 
     }
+
+
 }

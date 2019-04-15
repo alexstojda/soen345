@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.LastPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 class WelcomeController {
@@ -14,11 +15,21 @@ class WelcomeController {
 
     @GetMapping("/")
     public String welcome() {
-        if (lastPage.getLastPagePath().equals("/owners/find")) {
-            Toggle.logData("Visited Welcome Page\n");
+        if(Toggle.getHomePageToggle()) {
+            if (lastPage.getLastPagePath().equals("/owners/find")) {
+                Toggle.logData("Visited Welcome Page\n");
+            }
+            lastPage.setLastPagePath("/");
+            logger.info("Homepage accessed, Welcome has been returned");
+            return "welcome";
+        } else {
+            return "redirect:/vets.html";
         }
-        lastPage.setLastPagePath("/");
-        logger.info("Homepage accessed, Welcome has been returned");
-        return "welcome";
+    }
+
+    @GetMapping("/toggle")
+    public String toggle(){
+        Toggle.toggleDisableHomePage();
+        return "redirect:/";
     }
 }
