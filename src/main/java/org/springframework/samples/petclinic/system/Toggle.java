@@ -28,12 +28,11 @@ public class Toggle {
     public static void toggleFindOwner() { findOwnerToggle = !findOwnerToggle; }
     public static void toggleWelcomePageVet() { welcomePageVetToggle = !welcomePageVetToggle; }
 
-    public static void logData(String data) {
-        FileWriter fileWriterFindOwner = null;
-        FileWriter fileWriterWelcomePageVet = null;
-        try {
-            final String path = "src/main/resources/logging/";
+    final static String path = "src/main/resources/logging/";
 
+    public static void logFindOwnerData(String data) {
+        FileWriter fileWriterFindOwner = null;
+        try {
             if (findOwnerToggle) {
                 fileWriterFindOwner = new FileWriter(path + "newFindOwner.txt", true);
             } else {
@@ -44,14 +43,11 @@ public class Toggle {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-
     }
 
-    public static void logData(String data) {
+    public static void logWelcomePageVetData(String data) {
         FileWriter fileWriterWelcomePageVet = null;
         try {
-            final String path = "src/main/resources/logging/";
-
             if (welcomePageVetToggle) {
                 fileWriterWelcomePageVet = new FileWriter(path + "newWelcomePageVet.txt", true);
             } else {

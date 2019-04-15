@@ -15,7 +15,7 @@ class WelcomeController {
     @GetMapping("/")
     public String welcome() {
         if (lastPage.getLastPagePath().equals("/owners/find")) {
-            Toggle.logData("Visited Welcome Page\n");
+            Toggle.logFindOwnerData("Visited Welcome Page\n");
         }
         lastPage.setLastPagePath("/");
         logger.info("Homepage accessed, Welcome has been returned");

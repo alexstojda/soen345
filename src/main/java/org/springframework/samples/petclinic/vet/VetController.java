@@ -45,7 +45,7 @@ class VetController {
     @GetMapping("/vets.html")
     public String showVetList(Map<String, Object> model) {
         if (lastPage.getLastPagePath().equals("/owners/find")) {
-            Toggle.logData("Visited Vet Page\n");
+            Toggle.logFindOwnerData("Visited Vet Page\n");
         }
         lastPage.setLastPagePath("/vets.html");
         // Here we are returning an object of type 'Vets' rather than a collection of Vet

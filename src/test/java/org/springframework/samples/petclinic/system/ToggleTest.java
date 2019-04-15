@@ -41,7 +41,7 @@ public class ToggleTest {
             linesBefore++;
         }
 
-        toggle.logData("test\n");
+        toggle.logFindOwnerData("test\n");
         linesAfter = linesBefore;
 
         while (reader.readLine() != null){
@@ -64,7 +64,7 @@ public class ToggleTest {
             linesBefore++;
         }
 
-        toggle.logData("test\n");
+        toggle.logFindOwnerData("test\n");
         linesAfter = linesBefore;
 
         while (reader.readLine() != null){
