@@ -28,19 +28,7 @@ public class ToggleTest {
         assertFalse(before);
         assertTrue(after);
     }
-
-    @Test
-    public void testHomePageToggle(){
-        toggle.setHomePageToggle(false);
-        boolean before = toggle.getHomePageToggle();
-        toggle.toggleDisableHomePage();
-        boolean after = toggle.getOwnerToggle();
-
-        assertFalse(before);
-        assertTrue(after);
-    }
-
-
+    
     @Test
     public void testPaymentToggle(){
         toggle.setPaymentToggle(false);

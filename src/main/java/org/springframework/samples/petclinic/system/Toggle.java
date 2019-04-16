@@ -3,11 +3,8 @@ package org.springframework.samples.petclinic.system;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Toggle {
 
@@ -15,21 +12,21 @@ public class Toggle {
     }
 
     private static boolean findOwnerToggle = (((int) (Math.random() * getProbability())) == 0);
-    private static boolean disableHomePageToggle =(((int) (Math.random() * getProbability())) == 0);
+    private static boolean disableHomePage =(((int) (Math.random() * getProbability())) == 0);
     private static boolean paymentSystemEnable = (((int) (Math.random() * getProbability())) == 0);
 
     public static boolean getOwnerToggle() {
         return findOwnerToggle;
     }
     public static boolean getHomePageToggle() {
-        return disableHomePageToggle;
+        return disableHomePage;
     }
     public static boolean getPaymentToggle() {return paymentSystemEnable;}
     public static void setOwnerToggle(boolean toggle) {
         findOwnerToggle = toggle;
     }
     public static void setHomePageToggle(boolean toggle) {
-        disableHomePageToggle = toggle;
+        disableHomePage = toggle;
     }
     public static void setPaymentToggle(boolean toggle) {
         paymentSystemEnable = toggle;
@@ -38,7 +35,7 @@ public class Toggle {
         findOwnerToggle = !findOwnerToggle;
     }
     public static void toggleDisableHomePage() {
-        disableHomePageToggle = !disableHomePageToggle;
+        disableHomePage = !disableHomePage;
     }
     public static void togglePayment() {
         paymentSystemEnable = !paymentSystemEnable;
@@ -64,7 +61,7 @@ public class Toggle {
         FileWriter fileWriter = null;
         try {
             final String path = "src/main/resources/logging/";
-            if (disableHomePageToggle) {
+            if (disableHomePage) {
                 fileWriter = new FileWriter(path + "newWelcome.txt", true);
             } else {
                 fileWriter = new FileWriter(path + "oldWelcome.txt", true);
