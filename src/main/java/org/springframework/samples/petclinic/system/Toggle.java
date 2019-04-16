@@ -25,6 +25,9 @@ public class Toggle {
     public static void setHomePageToggle(boolean toggle) {
         disableHomePageToggle = toggle;
     }
+    public static void setPaymentToggle(boolean toggle) {
+        paymentSystemEnable = toggle;
+    }
     public static void toggleFindOwner() {
         findOwnerToggle = !findOwnerToggle;
     }
