@@ -2,15 +2,21 @@ package org.springframework.samples.petclinic.system;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Toggle {
 
     public Toggle() {
     }
 
-    private static boolean findOwnerToggle = (((int) (Math.random() * 2)) == 0);
-    private static boolean disableHomePageToggle = true;
-    private static boolean paymentSystemEnable = true;
+    private static boolean findOwnerToggle = (((int) (Math.random() * getProbability())) == 0);
+    private static boolean disableHomePageToggle =(((int) (Math.random() * getProbability())) == 0);
+    private static boolean paymentSystemEnable = (((int) (Math.random() * getProbability())) == 0);
 
     public static boolean getOwnerToggle() {
         return findOwnerToggle;
@@ -70,5 +76,14 @@ public class Toggle {
         }
     }
 
-
+    private static long getProbability(){
+        LocalDate dateBefore = LocalDate.now();
+        LocalDate dateAfter = LocalDate.of(2019, Month.JULY, 25);
+        if(dateBefore.isBefore(dateAfter)) {
+            long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+            return noOfDaysBetween;
+        } else {
+            return 1;
+        }
+    }
 }

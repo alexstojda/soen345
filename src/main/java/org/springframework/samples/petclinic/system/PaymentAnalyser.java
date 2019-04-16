@@ -100,24 +100,4 @@ public class PaymentAnalyser {
         }
 
     }
-//
-//    public static void logData(String data) {
-//        FileWriter fileWriter = null;
-//        String data = "";
-//        try {
-//            final String path = "src/main/resources/logging/";
-//            fileWriter = new FileWriter(path + "paymentlog.txt", true);
-//               if(state == 0){
-//                   data = ""
-//            } else if (state == 1) {
-//
-//            }
-//            fileWriter.write(data);
-//            fileWriter.close();
-//        } catch (IOException e) {
-//            System.err.println(e.getMessage());
-//        }
-//
-//    }
-
 }
