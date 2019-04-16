@@ -38,13 +38,13 @@ public class LogAnalysis {
 
         reader = new BufferedReader(new FileReader("src/main/resources/logging/oldFindOwner.txt"));
         while ((currentLine = reader.readLine()) != null) {
-            if(currentLine == "Visited Welcome Page"){
+            if(currentLine.equals("Visited Welcome Page")){
                 visitedWelcomeOld++;
             }
-            if(currentLine == "Visited Error Page"){
+            if(currentLine.equals("Visited Error Page")){
                 visitedErrorOld++;
             }
-            if(currentLine == "Visited Vet Page"){
+            if(currentLine.equals("Visited Vet Page")){
                 visitedVetOld++;
             }
         }
@@ -53,28 +53,28 @@ public class LogAnalysis {
         totalNew = visitedErrorNew+visitedVetNew+visitedWelcomeNew;
         totalOld = visitedErrorOld+visitedVetOld+visitedWelcomeOld;
 
-        System.out.println("\nNew Find Owner\n");
+        System.out.println("\nFind Owner Disabled\n");
 
-        System.out.println("Number # of people who redirected to Welcome page:" + visitedWelcomeNew);
-        System.out.println("Number# of people who redirected to Error page:" + visitedErrorNew);
-        System.out.println("Number# of people who redirected to Vet page:" + visitedVetNew);
+        System.out.println("Number of people who redirected to Welcome page:" + visitedWelcomeNew);
+        System.out.println("Number of people who redirected to Error page:" + visitedErrorNew);
+        System.out.println("Number of people who redirected to Vet page:" + visitedVetNew);
 
         if (totalNew>0) {
-            System.out.println("Percentage % of people who redirected to Welcome page:" + visitedWelcomeNew / totalNew);
-            System.out.println("Percentage % of people who redirected to Error page:" + visitedErrorNew / totalNew);
-            System.out.println("Percentage % of people who redirected to Vet page:" + visitedVetNew / totalNew);
+            System.out.println("Percentage of people who redirected to Welcome page:" + visitedWelcomeNew / totalNew);
+            System.out.println("Percentage of people who redirected to Error page:" + visitedErrorNew / totalNew);
+            System.out.println("Percentage of people who redirected to Vet page:" + visitedVetNew / totalNew);
         }
 
-        System.out.println("\nOld Find Owner\n");
+        System.out.println("\nFind Owner enabled\n");
 
-        System.out.println("Number # of people who redirected to Welcome page:" + visitedWelcomeOld);
-        System.out.println("Number # of people who redirected to Error page:" + visitedErrorOld);
-        System.out.println("Number # of people who redirected to Vet page:" + visitedVetOld);
+        System.out.println("Number of people who redirected to Welcome page:" + visitedWelcomeOld);
+        System.out.println("Number of people who redirected to Error page:" + visitedErrorOld);
+        System.out.println("Number of people who redirected to Vet page:" + visitedVetOld);
 
         if (totalOld>0) {
-            System.out.println("Percentage % of people who redirected to Welcome page:" + visitedWelcomeOld/totalOld);
-            System.out.println("Percentage % of people who redirected to Error page:" + visitedErrorOld/totalOld);
-            System.out.println("Percentage % of people who redirected to Vet page:" + visitedVetOld/totalOld);
+            System.out.println("Percentage of people who redirected to Welcome page:" + visitedWelcomeOld/totalOld);
+            System.out.println("Percentage of people who redirected to Error page:" + visitedErrorOld/totalOld);
+            System.out.println("Percentage of people who redirected to Vet page:" + visitedVetOld/totalOld);
         }
     }
 }
